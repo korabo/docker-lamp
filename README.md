@@ -12,32 +12,34 @@ With Ubuntu **20.04** and **18.04** images on the `latest-2004` and `latest-1804
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Introduction](#introduction)
-- [Image Versions](#image-versions)
-- [Using the image](#using-the-image)
-  - [On the command line](#on-the-command-line)
-  - [With a Dockerfile](#with-a-dockerfile)
-  - [MySQL Databases](#mysql-databases)
-    - [Creating a database](#creating-a-database)
-      - [PHPMyAdmin](#phpmyadmin)
-      - [Command Line](#command-line)
-- [Adding your own content](#adding-your-own-content)
-  - [Adding your app](#adding-your-app)
-  - [Persisting your MySQL](#persisting-your-mysql)
-  - [Doing both](#doing-both)
-    - [`.bash_profile` alias examples](#bash_profile-alias-examples)
-      - [Example usage](#example-usage)
-- [Developing the image](#developing-the-image)
-  - [Building and running](#building-and-running)
-  - [Testing](#testing)
-  - [One-line testing command](#one-line-testing-command)
-    - [`docker-compose -f docker-compose.test.yml -p ci build;`](#docker-compose--f-docker-composetestyml--p-ci-build)
-    - [`docker-compose -f docker-compose.test.yml -p ci up -d;`](#docker-compose--f-docker-composetestyml--p-ci-up--d)
-    - [`cd tests && ./test.sh;`](#cd-tests--testsh)
-    - [`echo "Exited with status code: $?"`](#echo-exited-with-status-code-)
-- [Inspiration](#inspiration)
-- [Contributing](#contributing)
-- [License](#license)
+- [](#)
+    - [Contents](#contents)
+  - [Introduction](#introduction)
+  - [Image Versions](#image-versions)
+  - [Using the image](#using-the-image)
+    - [On the command line](#on-the-command-line)
+    - [With a Dockerfile](#with-a-dockerfile)
+    - [MySQL Databases](#mysql-databases)
+      - [Creating a database](#creating-a-database)
+        - [PHPMyAdmin](#phpmyadmin)
+        - [Command Line](#command-line)
+  - [Adding your own content](#adding-your-own-content)
+    - [Adding your app](#adding-your-app)
+    - [Persisting your MySQL](#persisting-your-mysql)
+    - [Doing both](#doing-both)
+      - [`.bash_profile` alias examples](#bash_profile-alias-examples)
+        - [Example usage](#example-usage)
+  - [Developing the image](#developing-the-image)
+    - [Building and running](#building-and-running)
+    - [Testing](#testing)
+    - [One-line testing command](#one-line-testing-command)
+      - [`docker-compose -f docker-compose.test.yml -p ci build;`](#docker-compose--f-docker-composetestyml--p-ci-build)
+      - [`docker-compose -f docker-compose.test.yml -p ci up -d;`](#docker-compose--f-docker-composetestyml--p-ci-up--d)
+      - [`cd tests && ./test.sh;`](#cd-tests--testsh)
+      - [`echo "Exited with status code: $?"`](#echo-exited-with-status-code-)
+  - [Inspiration](#inspiration)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -198,14 +200,16 @@ git clone https://github.com/mattrayner/docker-lamp.git
 cd docker-lamp
 
 # Build the images
-docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest -f ./2004/Dockerfile .
-docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest-2004-php8 -f ./2004/Dockerfile .
-docker build --build-arg PHP_VERSION=7.4 -t=mattrayner/lamp:latest-2004-php7 -f ./2004/Dockerfile .
-docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest-1804-php8 -f ./1804/Dockerfile .
-docker build --build-arg PHP_VERSION=7.4 -t=mattrayner/lamp:latest-1804-php7 -f ./1804/Dockerfile .
+docker build --build-arg PHP_VERSION=8.2 --build-arg NODE_VERSION=18.18.2 -t=korabo/lamp:latest -f ./2204/Dockerfile .
+docker build --build-arg PHP_VERSION=8.2 --build-arg NODE_VERSION=18.18.2 -t=korabo/lamp:latest-2204-php82 -f ./2204/Dockerfile .
+# docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest -f ./2004/Dockerfile .
+# docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest-2004-php8 -f ./2004/Dockerfile .
+# docker build --build-arg PHP_VERSION=7.4 -t=mattrayner/lamp:latest-2004-php7 -f ./2004/Dockerfile .
+# docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest-1804-php8 -f ./1804/Dockerfile .
+# docker build --build-arg PHP_VERSION=7.4 -t=mattrayner/lamp:latest-1804-php7 -f ./1804/Dockerfile .
 
 # Run the image as a container
-docker run -d -p "3000:80" mattrayner/lamp:latest
+docker run -d -p "3000:80" korabo/lamp:latest
 
 # Sleep to allow the container to boot
 sleep 30
