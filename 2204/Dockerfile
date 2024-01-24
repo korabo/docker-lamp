@@ -6,7 +6,7 @@ ENV REFRESHED_AT 2023-12-07
 # MAINTAINER Daniel Graziotin <daniel@ineed.coffee>
 # updated for Ubuntu 20.04 LTS/PHP 7.4/PHP 8.0 Ferdinand Kasper <fkasper@modus-operandi.at>
 
-ENV DOCKER_USER_ID 501 
+ENV DOCKER_USER_ID 501
 ENV DOCKER_USER_GID 20
 
 ENV BOOT2DOCKER_ID 1000
@@ -88,8 +88,17 @@ RUN echo "# --- npm cache clean ---" && \
     npm cache clean --force && \
     `# FIN #`
 
+RUN echo "# --- Add user with sudo ---" && \
+    set -xe && \
+    export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y sudo && \
+    useradd -o -u ${BOOT2DOCKER_ID} -g ${BOOT2DOCKER_GID} -s /bin/bash -m developper && \
+    echo "developper ALL=(ALL:ALL) NOPASSWD: ALL" >| /etc/sudoers.d/developper && \
+    echo "$(id -un $(id -u developper)) ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/developper && \
+    `# FIN #`
 
-ENV MYSQL_PASS:-$(pwgen -s 12 1)
+# ENV MYSQL_PASS:-$(pwgen -s 12 1)
 # config to enable .htaccess
 ADD supporting_files/apache_default24 /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
@@ -102,10 +111,15 @@ ADD app/ /app
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 
+ENV DEBIAN_FRONTEND ""
+
 # Add volumes for the app and MySql
 VOLUME  ["/var/lib/mysql", "/app" ]
 
 EXPOSE 80 3306
-CMD ["/run.sh"]
+
+USER developper
+CMD ["sudo", "/run.sh"]
+
 
 LABEL MAINTAINER="takeuchi@korabo.jp"

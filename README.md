@@ -201,7 +201,7 @@ cd docker-lamp
 
 # Build the images
 docker build --build-arg PHP_VERSION=8.2 --build-arg NODE_VERSION=18.18.2 -t=korabo/lamp:latest -f ./2204/Dockerfile .
-docker build --build-arg PHP_VERSION=8.2 --build-arg NODE_VERSION=18.18.2 -t=korabo/lamp:latest-2204-php82 -f ./2204/Dockerfile .
+docker build --build-arg PHP_VERSION=8.1 --build-arg NODE_VERSION=18.18.2 -t=korabo/lamp:latest-2204-php81 -f ./2204/Dockerfile .
 # docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest -f ./2004/Dockerfile .
 # docker build --build-arg PHP_VERSION=8.0 -t=mattrayner/lamp:latest-2004-php8 -f ./2004/Dockerfile .
 # docker build --build-arg PHP_VERSION=7.4 -t=mattrayner/lamp:latest-2004-php7 -f ./2004/Dockerfile .
